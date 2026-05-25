@@ -51,16 +51,22 @@
 #![warn(missing_docs)]
 #![warn(clippy::pedantic)]
 #![allow(clippy::module_name_repetitions)]
+// Math identifiers like `a_0`, `a_1`, `x_1` appear unwrapped in docstrings as
+// they would in a paper. Forcing backticks makes the math harder to read.
+#![allow(clippy::doc_markdown)]
+// Test code casts small loop indices to u8 — safe by construction
+// (M ≤ 32 in tests, well within u8 range).
+#![allow(clippy::cast_possible_truncation)]
 
+pub mod certificate;
 pub mod error;
 pub mod shamir;
 pub mod types;
 
+pub use certificate::{aggregate_partials, verify_slash_certificates, CertConfig};
 pub use error::ModerationError;
 pub use shamir::{recover_secret_from_two_shares, ShamirShare};
-pub use types::{
-    ContentId, ForumId, FullCertificate, MemberKey, PartialCert, PostProof, TxHash,
-};
+pub use types::{ContentId, ForumId, FullCertificate, MemberKey, PartialCert, PostProof, TxHash};
 
 /// Result type alias used throughout the library.
 pub type Result<T> = core::result::Result<T, ModerationError>;
@@ -138,9 +144,5 @@ pub trait ModerationLibrary {
     /// Returns [`ModerationError::BelowThreshold`] if fewer than K certificates
     /// supplied, or [`ModerationError::Mismatched`] if certificates do not
     /// target the same member.
-    fn submit_slash(
-        &self,
-        forum_id: ForumId,
-        certs: &[FullCertificate],
-    ) -> Result<TxHash>;
+    fn submit_slash(&self, forum_id: ForumId, certs: &[FullCertificate]) -> Result<TxHash>;
 }

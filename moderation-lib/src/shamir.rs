@@ -181,11 +181,9 @@ mod tests {
         let x2 = Fr::from(2u64);
         let y2 = secret + slope * x2;
 
-        let recovered = recover_secret_from_two_shares(
-            ShamirShare::new(x1, y1),
-            ShamirShare::new(x2, y2),
-        )
-        .expect("two distinct x-coords should reconstruct");
+        let recovered =
+            recover_secret_from_two_shares(ShamirShare::new(x1, y1), ShamirShare::new(x2, y2))
+                .expect("two distinct x-coords should reconstruct");
 
         assert_eq!(recovered, secret);
     }
@@ -255,11 +253,9 @@ mod tests {
             let y1 = secret + slope * x1;
             let y2 = secret + slope * x2;
 
-            let recovered = recover_secret_from_two_shares(
-                ShamirShare::new(x1, y1),
-                ShamirShare::new(x2, y2),
-            )
-            .unwrap();
+            let recovered =
+                recover_secret_from_two_shares(ShamirShare::new(x1, y1), ShamirShare::new(x2, y2))
+                    .unwrap();
 
             assert_eq!(
                 recovered, secret,
@@ -282,11 +278,9 @@ mod tests {
         let x2 = Fr::from(2u64);
         let y2 = polynomial_b.0 + polynomial_b.1 * x2; // from polynomial B
 
-        let recovered = recover_secret_from_two_shares(
-            ShamirShare::new(x1, y1),
-            ShamirShare::new(x2, y2),
-        )
-        .unwrap();
+        let recovered =
+            recover_secret_from_two_shares(ShamirShare::new(x1, y1), ShamirShare::new(x2, y2))
+                .unwrap();
 
         // The function doesn't error — it just returns a garbage value.
         // It's the protocol's responsibility (external_nullifier binding) to
