@@ -1,0 +1,31 @@
+# Rust
+/target/
+**/*.rs.bk
+
+# Build artifacts that should NEVER be committed
+# (PR #53's AI-suspicion trap was a checked-in .so binary)
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# Secrets — NEVER commit
+.env
+.env.local
+*.pem
+*.key
+keystore/
+wallet.json
+
+# Logos local state
+.logos-local/
+sequencer-data/

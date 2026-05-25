@@ -1,0 +1,38 @@
+[workspace]
+resolver = "2"
+members = ["moderation-lib"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"  # bump to 2024 when LEZ guest crates are added
+rust-version = "1.85.0"
+license = "Apache-2.0"
+repository = "https://github.com/<USER>/lp0016-anon-forum"
+authors = ["<Your Name>"]
+
+[workspace.dependencies]
+# zk-crypto over BN254 (matches zerokit RLN + Groth16 verifier field).
+# `scalar_field` feature exposes `Fr` (the prime field we operate on).
+# Default features pulled for now — prune to no_std + selective features
+# when adding WASM target in D14b.
+ark-ff = { version = "0.4" }
+ark-bn254 = { version = "0.4", features = ["scalar_field"] }
+ark-std = { version = "0.4" }
+
+# Standard
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Testing
+proptest = "1"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+
+[profile.bench]
+opt-level = 3
+lto = "fat"
+debug = true
