@@ -7,7 +7,7 @@ version = "0.1.0"
 edition = "2021"  # bump to 2024 when LEZ guest crates are added
 rust-version = "1.85.0"
 license = "Apache-2.0"
-repository = "https://github.com/<USER>/lp0016-anon-forum"
+repository = "https://github.com/warfield2016/lp0016-anon-forum"
 authors = ["<Your Name>"]
 
 [workspace.dependencies]
